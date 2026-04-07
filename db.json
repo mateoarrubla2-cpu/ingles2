@@ -1,0 +1,102 @@
+{
+  "profiles": [
+    {
+      "id": "user-1",
+      "email": "teacher@example.com",
+      "full_name": "Teacher User",
+      "avatar_url": null,
+      "role": "teacher",
+      "created_at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "user-2",
+      "email": "student@example.com",
+      "full_name": "Student User",
+      "avatar_url": null,
+      "role": "student",
+      "created_at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "user-3",
+      "email": "admin@example.com",
+      "full_name": "Admin User",
+      "avatar_url": null,
+      "role": "admin",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  ],
+  "classrooms": [
+    {
+      "id": "classroom-1",
+      "teacher_id": "user-1",
+      "name": "English 101",
+      "description": "Introduction to English",
+      "level": "beginner",
+      "max_students": 30,
+      "code": "ABC123",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  ],
+  "classroom_members": [
+    {
+      "id": "member-1",
+      "classroom_id": "classroom-1",
+      "user_id": "user-2",
+      "role": "student",
+      "joined_at": "2026-01-01T00:00:00Z"
+    }
+  ],
+  "communities": [
+    {
+      "id": "community-1",
+      "creator_id": "user-1",
+      "name": "English Learning Community",
+      "description": "Share learning resources",
+      "is_public": true,
+      "code": "ELC12345",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  ],
+  "community_members": [
+    {
+      "id": "cmember-1",
+      "community_id": "community-1",
+      "user_id": "user-1",
+      "role": "admin",
+      "joined_at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "cmember-2",
+      "community_id": "community-1",
+      "user_id": "user-2",
+      "role": "member",
+      "joined_at": "2026-01-01T00:00:00Z"
+    }
+  ],
+  "community_posts": [
+    {
+      "id": "post-1",
+      "community_id": "community-1",
+      "user_id": "user-1",
+      "content": "Welcome to the community!",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  ],
+  "post_replies": [
+    {
+      "id": "reply-1",
+      "post_id": "post-1",
+      "user_id": "user-2",
+      "content": "Great to be here!",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  ],
+  "post_likes": [
+    {
+      "id": "like-1",
+      "post_id": "post-1",
+      "user_id": "user-2",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  ]
+}
