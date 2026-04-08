@@ -1214,11 +1214,198 @@
                 const db_obj = db.getDB();
                 if (!db_obj.lessons) {
                     db_obj.lessons = [];
-                    db.saveDB(db_obj);
                 }
-            },
+                if (!db_obj.assignments) {
+                    db_obj.assignments = [];
+                }
+                if (!db_obj.tasks) {
+                    db_obj.tasks = [];
+                }
+                if (!db_obj.lesson_assignments) {
+                    db_obj.lesson_assignments = [];
+                }
+                
+                // Agregar lecciones por defecto si no existen
+                if (db_obj.lessons.length === 0) {
+                    const defaultLessons = [
+                        {
+                            id: 'lesson_reading_1',
+                            type: 'reading',
+                            title: 'El Viaje de Emma - Level Beginner',
+                            description: 'Una historia corta perfecta para practicar vocabulario básico',
+                            level: 'beginner',
+                            creator_id: 'default',
+                            content: `Emma's Adventure
 
-            checkAuth() {
+Emma is a student from New York. She loves traveling and learning new things. Last summer, she decided to visit Paris for the first time.
+
+When Emma arrived at the airport, she felt very excited. She took a taxi to the hotel and checked in. The hotel was beautiful and clean. Her room had a wonderful view of the Eiffel Tower.
+
+The next morning, Emma woke up early. She ate breakfast at the café below the hotel. Then she walked to the Eiffel Tower. It was even more beautiful in person than in pictures.
+
+Emma spent the whole day exploring Paris. She visited museums, tried delicious French food, and met people from different countries. In the evening, she sat in a small park and wrote in her diary.
+
+"This is the best day of my life," she wrote.
+
+Emma stayed in Paris for two weeks. She made many friends and learned a lot about French culture. When it was time to go home, she felt sad but happy.
+
+On the airplane, Emma thought about her adventure. She knew this was only the beginning. "I will come back to Paris," she said to herself.`,
+                            created_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        },
+                        {
+                            id: 'lesson_reading_2',
+                            type: 'reading',
+                            title: 'Technology in Daily Life - Level Intermediate',
+                            description: 'Artículo sobre cómo la tecnología cambia nuestras vidas',
+                            level: 'intermediate',
+                            creator_id: 'default',
+                            content: `How Technology Changed Our Lives
+
+Technology has transformed the way we live, work, and communicate. Just a few decades ago, people couldn't imagine living without smartphones, internet, or social media.
+
+Today, technology is everywhere. We start our day by checking our phones. We use apps for almost everything - navigation, shopping, banking, and entertainment. Many people work from home using computers and video conferencing tools.
+
+The impact of technology is enormous. Students can access educational resources from anywhere in the world. Doctors can diagnose diseases remotely. Businesses can reach customers globally in seconds.
+
+However, technology also brings challenges. Many people are addicted to their phones and social media. Privacy concerns are growing. Some jobs have disappeared because of automation. Screen time has increased, affecting our health and relationships.
+
+Despite these challenges, technology continues to evolve. Artificial intelligence is becoming more intelligent. Virtual reality is creating new experiences. Renewable energy technology is helping combat climate change.
+
+The future will bring even more technological changes. We must learn to use technology wisely while maintaining human connections and values.
+
+Technology is not good or bad - it depends on how we use it.`,
+                            created_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        },
+                        {
+                            id: 'lesson_listening_1',
+                            type: 'listening',
+                            title: 'Introducing Yourself - Level Beginner',
+                            description: 'Práctica de presentación personal con vocabulario básico',
+                            level: 'beginner',
+                            creator_id: 'default',
+                            audio_url: '',
+                            transcription: `Speaker 1: Hello! My name is Tom. What's your name?
+Speaker 2: Hi Tom! I'm Sarah. Nice to meet you.
+Speaker 1: Nice to meet you too! Where are you from?
+Speaker 2: I'm from Canada. I'm from Toronto.
+Speaker 1: Oh, that's nice! I'm from the United States. From New York.
+Speaker 2: That's cool! What do you do?
+Speaker 1: I'm a teacher. I teach English.
+Speaker 2: That's interesting! I'm a nurse.
+Speaker 1: That's a wonderful job. How long have you been a nurse?
+Speaker 2: For five years. I love it!
+Speaker 1: That's great! Do you have family in Toronto?
+Speaker 2: Yes, I do. I have a sister and two brothers.
+Speaker 1: That's nice! Do you like living in Toronto?
+Speaker 2: Yes, I love it. The city is beautiful and friendly.
+Speaker 1: I would love to visit someday!
+Speaker 2: You should! I'll show you around.`,
+                            created_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        },
+                        {
+                            id: 'lesson_listening_2',
+                            type: 'listening',
+                            title: 'Weather and Seasons - Level Intermediate',
+                            description: 'Conversación sobre el clima y las estaciones',
+                            level: 'intermediate',
+                            creator_id: 'default',
+                            audio_url: '',
+                            transcription: `Speaker 1: What's the weather like where you are?
+Speaker 2: It's raining heavily today. It's been like this all week.
+Speaker 1: That sounds depressing. I hope it clears up soon.
+Speaker 2: Me too. I'm tired of the rain. What about you? How's the weather in your city?
+Speaker 1: It's quite pleasant actually. It's sunny and warm. About 25 degrees Celsius.
+Speaker 2: That sounds wonderful! I'm jealous. When does it get nice here?
+Speaker 1: What season are you in now?
+Speaker 2: It's autumn. Usually, autumn is nice, but this year has been unusually wet.
+Speaker 1: That must be difficult. Winter is coming soon, right?
+Speaker 2: Yes, in about two months. Winters are very cold here. It often snows.
+Speaker 1: Do you like winter?
+Speaker 2: I used to, but now I'm tired of the cold. I prefer spring and summer.
+Speaker 1: I understand. Spring is my favorite season too. Everything blooms and the weather is perfect.
+Speaker 2: I can't wait for spring. Maybe I'll visit your country next summer.
+Speaker 1: That would be amazing! You'll love it here.`,
+                            created_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        },
+                        {
+                            id: 'lesson_speaking_1',
+                            type: 'speaking',
+                            title: 'Daily Routine - Level Beginner',
+                            description: 'Practica describiendo tu rutina diaria',
+                            level: 'beginner',
+                            creator_id: 'default',
+                            topic: `Describe your daily routine. Try to answer these questions:
+
+1. What time do you wake up?
+2. What do you eat for breakfast?
+3. What time do you go to work or school?
+4. What do you do in the afternoon?
+5. What time do you have lunch?
+6. What do you do in the evening?
+7. What time do you go to bed?
+8. What is your favorite part of the day and why?
+
+Try to use words like: morning, afternoon, evening, then, after that, first, finally, usually, always, never.`,
+                            vocabulary: `Wake up - Despertarse
+Breakfast - Desayuno
+Work - Trabajo
+School - Escuela
+Afternoon - Tarde
+Lunch - Almuerzo
+Evening - Noche
+Bed - Cama
+Usually - Generalmente
+Finally - Finalmente
+Favorite - Favorito`,
+                            created_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        },
+                        {
+                            id: 'lesson_speaking_2',
+                            type: 'speaking',
+                            title: 'My Family and Hobbies - Level Intermediate',
+                            description: 'Habla sobre tu familia e intereses personales',
+                            level: 'intermediate',
+                            creator_id: 'default',
+                            topic: `Talk about your family and your hobbies. Answer these questions:
+
+1. Tell me about your family. How many people are in your family?
+2. What do your parents do for work?
+3. Do you have any siblings? What are they like?
+4. What is your favorite hobby?
+5. How often do you practice your hobby?
+6. Why do you love this hobby?
+7. What hobbies do your family members have?
+8. Do you have any hobbies in common with your family members?
+9. Have you taught anyone your favorite hobby?
+10. Do you think hobbies are important? Why?`,
+                            vocabulary: `Family - Familia
+Parents - Padres
+Mother/Father - Madre/Padre
+Siblings - Hermanos
+Hobby - Pasatiempo
+Interested in - Interesado en
+Enjoy - Disfrutar
+Passionate - Apasionado
+Relax - Relajarse
+Common - Común
+Teach - Enseñar`,
+                            created_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        }
+                    ];
+                    
+                    defaultLessons.forEach(lesson => {
+                        db_obj.lessons.push(lesson);
+                    });
+                }
+                
+                db.saveDB(db_obj);
+            },
                 const userId = this.getCurrentUserId();
                 if (userId) {
                     this.currentUser = db.findOne('profiles', { id: userId });
