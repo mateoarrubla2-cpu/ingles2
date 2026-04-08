@@ -6,7 +6,9 @@
       "full_name": "Teacher User",
       "avatar_url": null,
       "role": "teacher",
-      "created_at": "2026-01-01T00:00:00Z"
+      "current_level": null,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
     },
     {
       "id": "user-2",
@@ -14,7 +16,9 @@
       "full_name": "Student User",
       "avatar_url": null,
       "role": "student",
-      "created_at": "2026-01-01T00:00:00Z"
+      "current_level": null,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
     },
     {
       "id": "user-3",
@@ -22,7 +26,9 @@
       "full_name": "Admin User",
       "avatar_url": null,
       "role": "admin",
-      "created_at": "2026-01-01T00:00:00Z"
+      "current_level": null,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
     }
   ],
   "classrooms": [
@@ -34,7 +40,9 @@
       "level": "beginner",
       "max_students": 30,
       "code": "ABC123",
-      "created_at": "2026-01-01T00:00:00Z"
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
     }
   ],
   "classroom_members": [
@@ -54,7 +62,8 @@
       "description": "Share learning resources",
       "is_public": true,
       "code": "ELC12345",
-      "created_at": "2026-01-01T00:00:00Z"
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
     }
   ],
   "community_members": [
@@ -77,18 +86,25 @@
     {
       "id": "post-1",
       "community_id": "community-1",
-      "user_id": "user-1",
+      "author_id": "user-1",
+      "title": "Welcome to the community!",
       "content": "Welcome to the community!",
-      "created_at": "2026-01-01T00:00:00Z"
+      "likes_count": 0,
+      "replies_count": 0,
+      "is_pinned": false,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
     }
   ],
   "post_replies": [
     {
       "id": "reply-1",
       "post_id": "post-1",
-      "user_id": "user-2",
+      "author_id": "user-2",
       "content": "Great to be here!",
-      "created_at": "2026-01-01T00:00:00Z"
+      "likes_count": 0,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
     }
   ],
   "post_likes": [

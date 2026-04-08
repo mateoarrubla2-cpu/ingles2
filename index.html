@@ -1,0 +1,2527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Learning Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+        }
+
+        .nav-menu a, .nav-menu button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            border-radius: 4px;
+        }
+
+        .nav-menu a:hover, .nav-menu button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 60px;
+            width: 250px;
+            height: calc(100vh - 60px);
+            background: #2c3e50;
+            color: white;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: none;
+            z-index: 99;
+        }
+
+        .sidebar.active {
+            display: block;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin: 0.5rem 0;
+        }
+
+        .sidebar-menu a {
+            color: #ecf0f1;
+            text-decoration: none;
+            display: block;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: #34495e;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 0;
+            padding: 2rem 0;
+        }
+
+        .main-content.with-sidebar {
+            margin-left: 250px;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #e07fef 0%, #dc4354 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #3a9efd 0%, #00dae8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #f55c8d 0%, #fedc22 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(250, 112, 154, 0.4);
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border: none;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        }
+
+        /* Auth */
+        .auth-container {
+            max-width: 400px;
+            margin: 5rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-title {
+            text-align: center;
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+
+        /* Dialog */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #ecf0f1;
+            padding-bottom: 1rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #7f8c8d;
+        }
+
+        .modal-footer {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .badge-primary {
+            background: #d6eaf8;
+            color: #2c3e50;
+        }
+
+        .badge-success {
+            background: #d5f4e6;
+            color: #27ae60;
+        }
+
+        .badge-warning {
+            background: #fef5e7;
+            color: #e67e22;
+        }
+
+        .badge-info {
+            background: #e8f4f8;
+            color: #3498db;
+        }
+
+        /* Task Styles */
+        .task-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: #d5f4e6;
+            color: #27ae60;
+            border-left: 4px solid #27ae60;
+        }
+
+        .alert-error {
+            background: #fadbd8;
+            color: #e74c3c;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .alert-info {
+            background: #d6eaf8;
+            color: #3498db;
+            border-left: 4px solid #3498db;
+        }
+
+        /* List */
+        .list-item {
+            padding: 1rem;
+            border-bottom: 1px solid #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .list-item-content {
+            flex: 1;
+        }
+
+        .list-item-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+
+        .list-item-subtitle {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .list-item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .list-item-actions button {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        /* Dashboard Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: none;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .stat-card:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
+        }
+
+        .stat-card:nth-child(2):hover {
+            box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        .stat-card:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+        }
+
+        .stat-card:nth-child(3):hover {
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content.with-sidebar {
+                margin-left: 0;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu {
+                gap: 0.5rem;
+            }
+
+            .modal-content {
+                max-width: 95%;
+            }
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ecf0f1;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">🎓 English Learning</div>
+                <ul class="nav-menu">
+                    <li><button onclick="app.navigate('dashboard')" class="nav-link">Inicio</button></li>
+                    <li><button onclick="app.navigate('lessons')" class="nav-link">Lecciones</button></li>
+                    <li><button onclick="app.navigate('classrooms')" class="nav-link">Clases</button></li>
+                    <li><button onclick="app.navigate('communities')" class="nav-link">Comunidades</button></li>
+                    <li id="userMenu"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Alert Container -->
+            <div id="alertContainer"></div>
+
+            <!-- Auth Pages -->
+            <div id="login-page" class="page">
+                <div class="auth-container">
+                    <h2 class="auth-title">Inicio de Sesión</h2>
+                    <form id="loginForm" onsubmit="app.login(event)">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="loginEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input type="password" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Iniciar Sesión</button>
+                        <p style="text-align: center; margin-top: 1rem;">
+                            ¿No tienes cuenta? <a href="#" onclick="app.navigate('register'); return false;">Registrarse</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+
+            <div id="register-page" class="page">
+                <div class="auth-container">
+                    <h2 class="auth-title">Registro</h2>
+                    <form id="registerForm" onsubmit="app.register(event)">
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" id="registerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="registerEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input type="password" id="registerPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Usuario</label>
+                            <select id="registerRole" required>
+                                <option value="">Seleccionar tipo</option>
+                                <option value="student">Estudiante</option>
+                                <option value="teacher">Profesor</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Registrarse</button>
+                        <p style="text-align: center; margin-top: 1rem;">
+                            ¿Ya tienes cuenta? <a href="#" onclick="app.navigate('login'); return false;">Iniciar Sesión</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Dashboard Page -->
+            <div id="dashboard-page" class="page">
+                <h1>Bienvenido</h1>
+                <div id="dashboardContent" style="margin-top: 2rem;"></div>
+            </div>
+
+            <!-- Lessons Page -->
+            <div id="lessons-page" class="page">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Mis Lecciones</h2>
+                    </div>
+                    <div style="margin-bottom: 2rem;">
+                        <div class="grid">
+                            <div class="card" style="cursor: pointer; text-align: center;" onclick="app.navigate('lesson-reading')">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">📖</div>
+                                <h3>Reading</h3>
+                                <p style="color: #7f8c8d; margin-top: 0.5rem;">Mejora tu comprensión de lectura</p>
+                            </div>
+                            <div class="card" style="cursor: pointer; text-align: center;" onclick="app.navigate('lesson-listening')">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">🎧</div>
+                                <h3>Listening</h3>
+                                <p style="color: #7f8c8d; margin-top: 0.5rem;">Entrena tu oído en inglés</p>
+                            </div>
+                            <div class="card" style="cursor: pointer; text-align: center;" onclick="app.navigate('lesson-speaking')">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">🎤</div>
+                                <h3>Speaking</h3>
+                                <p style="color: #7f8c8d; margin-top: 0.5rem;">Practica pronunciación y conversación</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reading Lessons Page -->
+            <div id="lesson-reading-page" class="page">
+                <button class="btn btn-secondary" onclick="app.navigate('lessons')" style="margin-bottom: 1rem;">← Volver</button>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📖 Reading - Comprensión de Lectura</h2>
+                        <button class="btn btn-primary" onclick="app.openModal('createReadingLessonModal')">+ Nueva Lección</button>
+                    </div>
+                    <div id="readingLessonsList"></div>
+                </div>
+            </div>
+
+            <!-- Listening Lessons Page -->
+            <div id="lesson-listening-page" class="page">
+                <button class="btn btn-secondary" onclick="app.navigate('lessons')" style="margin-bottom: 1rem;">← Volver</button>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">🎧 Listening - Comprensión Auditiva</h2>
+                        <button class="btn btn-primary" onclick="app.openModal('createListeningLessonModal')">+ Nueva Lección</button>
+                    </div>
+                    <div id="listeningLessonsList"></div>
+                </div>
+            </div>
+
+            <!-- Speaking Lessons Page -->
+            <div id="lesson-speaking-page" class="page">
+                <button class="btn btn-secondary" onclick="app.navigate('lessons')" style="margin-bottom: 1rem;">← Volver</button>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">🎤 Speaking - Expresión Oral</h2>
+                        <button class="btn btn-primary" onclick="app.openModal('createSpeakingLessonModal')">+ Nueva Lección</button>
+                    </div>
+                    <div id="speakingLessonsList"></div>
+                </div>
+            </div>
+
+            <!-- Lesson Detail Page -->
+            <div id="lesson-detail-page" class="page">
+                <div id="lessonDetail"></div>
+            </div>
+
+            <!-- Classrooms Page -->
+            <div id="classrooms-page" class="page">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Mis Clases</h2>
+                        <div>
+                            <button class="btn btn-primary" onclick="app.openModal('createClassroomModal')">+ Nueva Clase</button>
+                            <button class="btn btn-secondary" onclick="app.openModal('joinClassroomModal')" style="margin-left: 0.5rem;">Unirse a Clase</button>
+                        </div>
+                    </div>
+                    <div id="classroomsList"></div>
+                </div>
+            </div>
+
+            <!-- Communities Page -->
+            <div id="communities-page" class="page">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Comunidades</h2>
+                        <div>
+                            <button class="btn btn-primary" onclick="app.openModal('createCommunityModal')">+ Nueva Comunidad</button>
+                            <button class="btn btn-secondary" onclick="app.openModal('joinCommunityModal')" style="margin-left: 0.5rem;">Unirse a Comunidad</button>
+                        </div>
+                    </div>
+                    <div id="communitiesList"></div>
+                </div>
+            </div>
+
+            <!-- Classroom Detail Page -->
+            <div id="classroom-detail-page" class="page">
+                <div id="classroomDetail"></div>
+            </div>
+
+            <!-- Community Detail Page -->
+            <div id="community-detail-page" class="page">
+                <div id="communityDetail"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Create Classroom Modal -->
+    <div id="createClassroomModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Crear Nueva Clase</h3>
+                <button class="modal-close" onclick="app.closeModal('createClassroomModal')">×</button>
+            </div>
+            <form onsubmit="app.createClassroom(event)">
+                <div class="form-group">
+                    <label>Nombre de la Clase</label>
+                    <input type="text" id="classroomName" required>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="classroomDescription"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Nivel</label>
+                    <select id="classroomLevel" required>
+                        <option value="">Seleccionar nivel</option>
+                        <option value="beginner">Principiante</option>
+                        <option value="intermediate">Intermedio</option>
+                        <option value="advanced">Avanzado</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal('createClassroomModal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Join Classroom Modal -->
+    <div id="joinClassroomModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Unirse a Clase</h3>
+                <button class="modal-close" onclick="app.closeModal('joinClassroomModal')">×</button>
+            </div>
+            <form onsubmit="app.joinClassroom(event)">
+                <div class="form-group">
+                    <label>Código de la Clase</label>
+                    <input type="text" id="classroomCode" placeholder="Ej: ABC123" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal('joinClassroomModal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Unirse</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Community Modal -->
+    <div id="createCommunityModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Crear Nueva Comunidad</h3>
+                <button class="modal-close" onclick="app.closeModal('createCommunityModal')">×</button>
+            </div>
+            <form onsubmit="app.createCommunity(event)">
+                <div class="form-group">
+                    <label>Nombre de la Comunidad</label>
+                    <input type="text" id="communityName" required>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="communityDescription"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal('createCommunityModal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Join Community Modal -->
+    <div id="joinCommunityModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Unirse a Comunidad</h3>
+                <button class="modal-close" onclick="app.closeModal('joinCommunityModal')">×</button>
+            </div>
+            <form onsubmit="app.joinCommunity(event)">
+                <div class="form-group">
+                    <label>Código de la Comunidad</label>
+                    <input type="text" id="communityCode" placeholder="Ej: ABC123" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal('joinCommunityModal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Unirse</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- New Post Modal -->
+    <div id="newPostModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nuevo Post</h3>
+                <button class="modal-close" onclick="app.closeModal('newPostModal')">×</button>
+            </div>
+            <form onsubmit="app.createPost(event)">
+                <div class="form-group">
+                    <label>Contenido del Post</label>
+                    <textarea id="newPostContent" required placeholder="Escribe tu post aquí..."></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal('newPostModal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Publicar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Reading Lesson Modal -->
+    <div id="createReadingLessonModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nueva Lección de Reading</h3>
+                <button class="modal-close" onclick="app.closeModal('createReadingLessonModal')">×</button>
+            </div>
+            <form onsubmit="app.createLesson(event, 'reading')">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="lessonTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="lessonDescription" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Contenido / Texto</label>
+                    <textarea id="lessonContent" required placeholder="Pega el texto para leer..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Nivel</label>
+                    <select id="lessonLevel" required>
+                        <option value="">Seleccionar</option>
+                        <option value="beginner">Principiante</option>
+                        <option value="intermediate">Intermedio</option>
+                        <option value="advanced">Avanzado</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal('createReadingLessonModal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Listening Lesson Modal -->
+    <div id="createListeningLessonModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nueva Lección de Listening</h3>
+                <button class="modal-close" onclick="app.closeModal('createListeningLessonModal')">×</button>
+            </div>
+            <form onsubmit="app.createLesson(event, 'listening')">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="lessonTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="lessonDescription" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>URL del Audio</label>
+                    <input type="url" id="lessonAudioUrl" placeholder="https://ejemplo.com/audio.mp3">
+                </div>
+                <div class="form-group">
+                    <label>Transcripción</label>
+                    <textarea id="lessonTranscription" required placeholder="Escribe la transcripción del audio..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Nivel</label>
+                    <select id="lessonLevel" required>
+                        <option value="">Seleccionar</option>
+                        <option value="beginner">Principiante</option>
+                        <option value="intermediate">Intermedio</option>
+                        <option value="advanced">Avanzado</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal('createListeningLessonModal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Speaking Lesson Modal -->
+    <div id="createSpeakingLessonModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nueva Lección de Speaking</h3>
+                <button class="modal-close" onclick="app.closeModal('createSpeakingLessonModal')">×</button>
+            </div>
+            <form onsubmit="app.createLesson(event, 'speaking')">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="lessonTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="lessonDescription" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Tema o Preguntas para Practicar</label>
+                    <textarea id="lessonTopic" required placeholder="Ej: Háblame sobre tu día, Tu profesión, etc..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Vocabulario Sugerido</label>
+                    <textarea id="lessonVocabulary" placeholder="Palabras clave para usar en la práctica..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Nivel</label>
+                    <select id="lessonLevel" required>
+                        <option value="">Seleccionar</option>
+                        <option value="beginner">Principiante</option>
+                        <option value="intermediate">Intermedio</option>
+                        <option value="advanced">Avanzado</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal('createSpeakingLessonModal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Assign Lesson Modal -->
+    <div id="assignLessonModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Asignar Lección a Estudiante</h3>
+                <button class="modal-close" onclick="app.closeModal('assignLessonModal')">×</button>
+            </div>
+            <form onsubmit="event.preventDefault(); app.assignLessonToStudent()">
+                <div class="form-group">
+                    <label>Selecciona un Estudiante</label>
+                    <select id="assignStudentId" required>
+                        <option value="">Seleccionar estudiante...</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal('assignLessonModal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Asignar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Task Modal -->
+    <div id="createTaskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Crear Nueva Tarea</h3>
+                <button class="modal-close" onclick="app.closeModal('createTaskModal')">×</button>
+            </div>
+            <form onsubmit="app.createTask(event)">
+                <div class="form-group">
+                    <label>Título de la Tarea</label>
+                    <input type="text" id="taskTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="taskDescription" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Tarea</label>
+                    <select id="assignmentType" onchange="app.toggleAssignmentType(this.value)" required>
+                        <option value="">Seleccionar...</option>
+                        <option value="individual">Individual</option>
+                        <option value="group">Grupo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Clase</label>
+                    <select id="taskClassroom" required></select>
+                </div>
+                <div class="form-group" id="groupNameField" style="display: none;">
+                    <label>Nombre del Grupo</label>
+                    <input type="text" id="groupName">
+                </div>
+                <div class="form-group">
+                    <label>Fecha Límite</label>
+                    <input type="date" id="taskDueDate" required>
+                </div>
+                <div class="form-group" id="studentSelectionField" style="display: none;">
+                    <label>Selecciona Estudiantes</label>
+                    <div id="studentCheckboxes" style="max-height: 200px; overflow-y: auto;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal('createTaskModal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear Tarea</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Student Modal -->
+    <div id="addStudentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Agregar Estudiante a Clase</h3>
+                <button class="modal-close" onclick="app.closeModal('addStudentModal')">×</button>
+            </div>
+            <form onsubmit="event.preventDefault(); app.addStudentToClassroom()">
+                <div class="form-group">
+                    <label>Selecciona un Estudiante</label>
+                    <select id="addStudentSelect" required>
+                        <option value="">Seleccionar estudiante...</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal('addStudentModal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Application -->
+    <script>
+        // ==================== Database Layer ====================
+        class LocalStorageDB {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                const exists = localStorage.getItem('db_initialized');
+                if (!exists) {
+                    this.reset();
+                }
+            }
+
+            reset() {
+                const db = {
+                    profiles: [],
+                    classrooms: [],
+                    classroom_members: [],
+                    communities: [],
+                    community_members: [],
+                    community_posts: [],
+                    post_replies: [],
+                    post_likes: []
+                };
+                localStorage.setItem('app_db', JSON.stringify(db));
+                localStorage.setItem('db_initialized', 'true');
+            }
+
+            getDB() {
+                const db = localStorage.getItem('app_db');
+                return db ? JSON.parse(db) : this.reset();
+            }
+
+            saveDB(db) {
+                localStorage.setItem('app_db', JSON.stringify(db));
+            }
+
+            getTable(name) {
+                const db = this.getDB();
+                return db[name] || [];
+            }
+
+            saveTable(name, data) {
+                const db = this.getDB();
+                db[name] = data;
+                this.saveDB(db);
+            }
+
+            findOne(table, query) {
+                const data = this.getTable(table);
+                return data.find(item => {
+                    for (const key in query) {
+                        if (item[key] !== query[key]) return false;
+                    }
+                    return true;
+                });
+            }
+
+            find(table, query) {
+                const data = this.getTable(table);
+                if (!query || Object.keys(query).length === 0) {
+                    return data;
+                }
+                return data.filter(item => {
+                    for (const key in query) {
+                        if (item[key] !== query[key]) return false;
+                    }
+                    return true;
+                });
+            }
+
+            insertOne(table, doc) {
+                doc.id = this.generateId();
+                doc.created_at = new Date().toISOString();
+                doc.updated_at = new Date().toISOString();
+                const data = this.getTable(table);
+                data.push(doc);
+                this.saveTable(table, data);
+                return doc;
+            }
+
+            updateOne(table, query, updates) {
+                const data = this.getTable(table);
+                const item = data.find(item => {
+                    for (const key in query) {
+                        if (item[key] !== query[key]) return false;
+                    }
+                    return true;
+                });
+                if (item) {
+                    Object.assign(item, updates, { updated_at: new Date().toISOString() });
+                    this.saveTable(table, data);
+                }
+                return item;
+            }
+
+            deleteOne(table, query) {
+                const data = this.getTable(table);
+                const index = data.findIndex(item => {
+                    for (const key in query) {
+                        if (item[key] !== query[key]) return false;
+                    }
+                    return true;
+                });
+                if (index > -1) {
+                    data.splice(index, 1);
+                    this.saveTable(table, data);
+                    return true;
+                }
+                return false;
+            }
+
+            deleteMany(table, query) {
+                const data = this.getTable(table);
+                const filtered = data.filter(item => {
+                    for (const key in query) {
+                        if (item[key] !== query[key]) return false;
+                    }
+                    return true;
+                });
+                const deleted = data.length - filtered.length;
+                this.saveTable(table, filtered);
+                return deleted;
+            }
+
+            generateId() {
+                return 'id_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            }
+
+            generateCode() {
+                return Math.random().toString(36).substring(2, 8).toUpperCase();
+            }
+        }
+
+        // ==================== Main Application ====================
+        const db = new LocalStorageDB();
+
+        const app = {
+            currentUser: null,
+            currentPage: 'login',
+
+            init() {
+                this.checkAuth();
+                this.setupEventListeners();
+                this.initializeLessonsTable();
+                this.navigateToPage();
+            },
+
+            initializeLessonsTable() {
+                const db_obj = db.getDB();
+                if (!db_obj.lessons) {
+                    db_obj.lessons = [];
+                    db.saveDB(db_obj);
+                }
+            },
+
+            checkAuth() {
+                const userId = this.getCurrentUserId();
+                if (userId) {
+                    this.currentUser = db.findOne('profiles', { id: userId });
+                }
+            },
+
+            getCurrentUserId() {
+                return localStorage.getItem('current_user_id');
+            },
+
+            setCurrentUser(userId) {
+                localStorage.setItem('current_user_id', userId);
+                this.currentUser = db.findOne('profiles', { id: userId });
+            },
+
+            logout() {
+                localStorage.removeItem('current_user_id');
+                this.currentUser = null;
+                this.navigate('login');
+            },
+
+            login(event) {
+                event.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                const user = db.findOne('profiles', { email, password });
+                if (user) {
+                    this.setCurrentUser(user.id);
+                    this.showAlert('¡Bienvenido de vuelta!', 'success');
+                    this.navigate('dashboard');
+                } else {
+                    this.showAlert('Email o contraseña inválidos', 'error');
+                }
+            },
+
+            register(event) {
+                event.preventDefault();
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const role = document.getElementById('registerRole').value;
+
+                if (db.findOne('profiles', { email })) {
+                    this.showAlert('Este email ya está registrado', 'error');
+                    return;
+                }
+
+                const user = db.insertOne('profiles', {
+                    name,
+                    email,
+                    password,
+                    role,
+                    bio: '',
+                    avatar: '👤',
+                    is_active: true
+                });
+
+                this.setCurrentUser(user.id);
+                this.showAlert('¡Cuenta creada exitosamente!', 'success');
+                this.navigate('dashboard');
+            },
+
+            navigate(page) {
+                if (!this.currentUser && page !== 'login' && page !== 'register') {
+                    this.navigate('login');
+                    return;
+                }
+                this.currentPage = page;
+                this.navigateToPage();
+            },
+
+            navigateToPage() {
+                document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+
+                switch (this.currentPage) {
+                    case 'login':
+                        document.getElementById('login-page').classList.add('active');
+                        this.updateUserMenu();
+                        break;
+                    case 'register':
+                        document.getElementById('register-page').classList.add('active');
+                        this.updateUserMenu();
+                        break;
+                    case 'dashboard':
+                        document.getElementById('dashboard-page').classList.add('active');
+                        this.loadDashboard();
+                        this.updateUserMenu();
+                        break;
+                    case 'lessons':
+                        document.getElementById('lessons-page').classList.add('active');
+                        this.updateUserMenu();
+                        break;
+                    case 'lesson-reading':
+                        document.getElementById('lesson-reading-page').classList.add('active');
+                        if (this.currentUser.role === 'teacher') {
+                            this.loadReadingLessons();
+                        } else {
+                            this.loadAssignedReadingLessons();
+                        }
+                        this.updateUserMenu();
+                        break;
+                    case 'lesson-listening':
+                        document.getElementById('lesson-listening-page').classList.add('active');
+                        if (this.currentUser.role === 'teacher') {
+                            this.loadListeningLessons();
+                        } else {
+                            this.loadAssignedListeningLessons();
+                        }
+                        this.updateUserMenu();
+                        break;
+                    case 'lesson-speaking':
+                        document.getElementById('lesson-speaking-page').classList.add('active');
+                        if (this.currentUser.role === 'teacher') {
+                            this.loadSpeakingLessons();
+                        } else {
+                            this.loadAssignedSpeakingLessons();
+                        }
+                        this.updateUserMenu();
+                        break;
+                    case 'classrooms':
+                        document.getElementById('classrooms-page').classList.add('active');
+                        this.loadClassrooms();
+                        this.updateUserMenu();
+                        break;
+                    case 'communities':
+                        document.getElementById('communities-page').classList.add('active');
+                        this.loadCommunities();
+                        this.updateUserMenu();
+                        break;
+                    default:
+                        if (this.currentPage.startsWith('classroom-')) {
+                            document.getElementById('classroom-detail-page').classList.add('active');
+                            this.loadClassroomDetail(this.currentPage.split('-')[1]);
+                            this.updateUserMenu();
+                        } else if (this.currentPage.startsWith('community-')) {
+                            document.getElementById('community-detail-page').classList.add('active');
+                            this.loadCommunityDetail(this.currentPage.split('-')[1]);
+                            this.updateUserMenu();
+                        } else if (this.currentPage.startsWith('lesson-')) {
+                            document.getElementById('lesson-detail-page').classList.add('active');
+                            this.loadLessonDetail(this.currentPage.split('-')[1]);
+                            this.updateUserMenu();
+                        }
+                }
+            },
+
+            updateUserMenu() {
+                const menu = document.getElementById('userMenu');
+                menu.innerHTML = '';
+                
+                if (this.currentUser) {
+                    menu.innerHTML = `
+                        <span style="margin-right: 1rem; color: #555;">${this.currentUser.name}</span>
+                        <button onclick="app.logout()" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Salir</button>
+                    `;
+                }
+            },
+
+            loadDashboard() {
+                const content = document.getElementById('dashboardContent');
+
+                if (this.currentUser.role === 'teacher') {
+                    this.loadTeacherDashboard();
+                } else {
+                    this.loadStudentDashboard();
+                }
+            },
+
+            loadStudentDashboard() {
+                const content = document.getElementById('dashboardContent');
+                const classrooms = db.find('classroom_members', { student_id: this.currentUser.id });
+                const communities = db.find('community_members', { user_id: this.currentUser.id });
+                const readingLessons = db.find('lesson_assignments', { student_id: this.currentUser.id, lesson_type: 'reading' });
+                const listeningLessons = db.find('lesson_assignments', { student_id: this.currentUser.id, lesson_type: 'listening' });
+                const speakingLessons = db.find('lesson_assignments', { student_id: this.currentUser.id, lesson_type: 'speaking' });
+
+                content.innerHTML = `
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">${classrooms.length}</div>
+                            <div class="stat-label">Mis Clases</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">${communities.length}</div>
+                            <div class="stat-label">Mis Comunidades</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">${readingLessons.length + listeningLessons.length + speakingLessons.length}</div>
+                            <div class="stat-label">Lecciones Asignadas</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem;">
+                        <div>
+                            <h3>📖 Reading</h3>
+                            ${readingLessons.length === 0 ? `
+                                <p style="color: #999;">Aún no tienes lecciones asignadas</p>
+                            ` : readingLessons.slice(0, 3).map(a => {
+                                const lesson = db.findOne('lessons', { id: a.lesson_id });
+                                return lesson ? `
+                                    <div class="card" style="cursor: pointer;" onclick="app.navigate('lesson-${lesson.id}')">
+                                        <div class="list-item-title">${lesson.title}</div>
+                                        <div class="list-item-subtitle">${lesson.level}</div>
+                                    </div>
+                                ` : '';
+                            }).join('')}
+                        </div>
+                        <div>
+                            <h3>🎧 Listening</h3>
+                            ${listeningLessons.length === 0 ? `
+                                <p style="color: #999;">Aún no tienes lecciones asignadas</p>
+                            ` : listeningLessons.slice(0, 3).map(a => {
+                                const lesson = db.findOne('lessons', { id: a.lesson_id });
+                                return lesson ? `
+                                    <div class="card" style="cursor: pointer;" onclick="app.navigate('lesson-${lesson.id}')">
+                                        <div class="list-item-title">${lesson.title}</div>
+                                        <div class="list-item-subtitle">${lesson.level}</div>
+                                    </div>
+                                ` : '';
+                            }).join('')}
+                        </div>
+                        <div>
+                            <h3>🎤 Speaking</h3>
+                            ${speakingLessons.length === 0 ? `
+                                <p style="color: #999;">Aún no tienes lecciones asignadas</p>
+                            ` : speakingLessons.slice(0, 3).map(a => {
+                                const lesson = db.findOne('lessons', { id: a.lesson_id });
+                                return lesson ? `
+                                    <div class="card" style="cursor: pointer;" onclick="app.navigate('lesson-${lesson.id}')">
+                                        <div class="list-item-title">${lesson.title}</div>
+                                        <div class="list-item-subtitle">${lesson.level}</div>
+                                    </div>
+                                ` : '';
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            },
+
+            // Classrooms
+            loadClassrooms() {
+                const content = document.getElementById('classroomsList');
+                const createdClassrooms = db.find('classrooms', { teacher_id: this.currentUser.id });
+                const joinedClassrooms = db.find('classroom_members', { student_id: this.currentUser.id });
+                const joinedIds = joinedClassrooms.map(jc => jc.classroom_id);
+
+                let html = '';
+
+                if (createdClassrooms.length > 0) {
+                    html += '<h3 style="margin: 2rem 0 1rem;">Mis Clases</h3>';
+                    html += createdClassrooms.map(c => `
+                        <div class="list-item">
+                            <div class="list-item-content">
+                                <div class="list-item-title">${c.name}</div>
+                                <div class="list-item-subtitle">Código: <strong>${c.code}</strong> • ${c.level}</div>
+                            </div>
+                            <div class="list-item-actions">
+                                <button class="btn btn-primary btn-sm" onclick="app.navigate('classroom-${c.id}')">Ver</button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                if (joinedIds.length > 0) {
+                    html += '<h3 style="margin: 2rem 0 1rem;">Clases Unidas</h3>';
+                    const joined = db.find('classrooms', {});
+                    joined.filter(c => joinedIds.includes(c.id)).forEach(c => {
+                        html += `
+                            <div class="list-item">
+                                <div class="list-item-content">
+                                    <div class="list-item-title">${c.name}</div>
+                                    <div class="list-item-subtitle">${c.level}</div>
+                                </div>
+                                <div class="list-item-actions">
+                                    <button class="btn btn-primary btn-sm" onclick="app.navigate('classroom-${c.id}')">Ver</button>
+                                    <button class="btn btn-danger btn-sm" onclick="app.leaveClassroom('${c.id}')">Salir</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                content.innerHTML = html || '<p style="color: #999;">No hay clases aún</p>';
+            },
+
+            loadClassroomDetail(classroomId) {
+                const classroom = db.findOne('classrooms', { id: classroomId });
+                if (!classroom) {
+                    this.navigate('classrooms');
+                    return;
+                }
+
+                const members = db.find('classroom_members', { classroom_id: classroomId });
+                const isTeacher = classroom.teacher_id === this.currentUser.id;
+                const isStudent = members.some(m => m.student_id === this.currentUser.id);
+
+                const content = document.getElementById('classroomDetail');
+                content.innerHTML = `
+                    <button class="btn btn-secondary" onclick="app.navigate('classrooms')" style="margin-bottom: 1rem;">← Volver</button>
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title">${classroom.name}</h2>
+                                <p style="color: #7f8c8d; margin-top: 0.5rem;">${classroom.description || 'Sin descripción'}</p>
+                            </div>
+                            ${isTeacher ? `<span class="badge badge-primary">Profesor</span>` : ''}
+                        </div>
+                        <div style="margin: 1.5rem 0;">
+                            <p><strong>Código:</strong> ${classroom.code}</p>
+                            <p><strong>Nivel:</strong> ${classroom.level}</p>
+                            <p><strong>Estudiantes unidos:</strong> ${members.length}</p>
+                        </div>
+                        ${isTeacher ? `
+                            <button class="btn btn-primary" onclick="app.openAddStudentModal('${classroomId}')" style="margin-bottom: 1rem;">+ Agregar Estudiante</button>
+                        ` : ''}
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem;">Miembros (${members.length})</h3>
+                        <div id="membersList"></div>
+                    </div>
+                `;
+
+                const membersList = document.getElementById('membersList');
+                const memberIds = members.map(m => m.student_id);
+                const students = db.find('profiles', {}).filter(p => memberIds.includes(p.id));
+
+                membersList.innerHTML = students.map(student => `
+                    <div class="list-item">
+                        <div class="list-item-content">
+                            <div class="list-item-title">${student.name}</div>
+                            <div class="list-item-subtitle">${student.email}</div>
+                        </div>
+                        ${isTeacher ? `
+                            <button class="btn btn-danger btn-sm" onclick="app.removeStudentFromClassroom('${classroomId}', '${student.id}')">Remover</button>
+                        ` : ''}
+                    </div>
+                `).join('');
+            },
+
+            openAddStudentModal(classroomId) {
+                localStorage.setItem('classroom_to_add_student', classroomId);
+                const students = this.getStudents();
+                const members = db.find('classroom_members', { classroom_id: classroomId });
+                const memberIds = members.map(m => m.student_id);
+                const availableStudents = students.filter(s => !memberIds.includes(s.id));
+
+                if (availableStudents.length === 0) {
+                    this.showAlert('Todos los estudiantes ya están en esta clase', 'info');
+                    return;
+                }
+
+                const select = document.getElementById('addStudentSelect');
+                if (select) {
+                    select.innerHTML = '<option value="">Seleccionar estudiante...</option>' +
+                        availableStudents.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+                    this.openModal('addStudentModal');
+                } else {
+                    this.showAlert('Por favor, crea el modal de agregar estudiante', 'error');
+                }
+            },
+
+            addStudentToClassroom() {
+                const classroomId = localStorage.getItem('classroom_to_add_student');
+                const studentId = document.getElementById('addStudentSelect').value;
+
+                if (!studentId) {
+                    this.showAlert('Por favor selecciona un estudiante', 'error');
+                    return;
+                }
+
+                const existing = db.findOne('classroom_members', {
+                    classroom_id: classroomId,
+                    student_id: studentId
+                });
+
+                if (existing) {
+                    this.showAlert('Este estudiante ya está en la clase', 'error');
+                    return;
+                }
+
+                db.insertOne('classroom_members', {
+                    classroom_id: classroomId,
+                    student_id: studentId
+                });
+
+                this.showAlert('¡Estudiante agregado!', 'success');
+                this.closeModal('addStudentModal');
+                this.loadClassroomDetail(classroomId);
+                localStorage.removeItem('classroom_to_add_student');
+            },
+
+            // Communities
+            loadCommunities() {
+                const content = document.getElementById('communitiesList');
+                const createdCommunities = db.find('communities', { creator_id: this.currentUser.id });
+                const joinedCommunities = db.find('community_members', { user_id: this.currentUser.id });
+                const joinedIds = joinedCommunities.map(jc => jc.community_id);
+
+                let html = '';
+
+                if (createdCommunities.length > 0) {
+                    html += '<h3 style="margin: 2rem 0 1rem;">Mis Comunidades</h3>';
+                    html += createdCommunities.map(c => `
+                        <div class="list-item">
+                            <div class="list-item-content">
+                                <div class="list-item-title">${c.name}</div>
+                                <div class="list-item-subtitle">Código: <strong>${c.code}</strong></div>
+                            </div>
+                            <div class="list-item-actions">
+                                <button class="btn btn-primary btn-sm" onclick="app.navigate('community-${c.id}')">Ver</button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                if (joinedIds.length > 0) {
+                    html += '<h3 style="margin: 2rem 0 1rem;">Comunidades Unidas</h3>';
+                    const joined = db.find('communities', {});
+                    joined.filter(c => joinedIds.includes(c.id)).forEach(c => {
+                        html += `
+                            <div class="list-item">
+                                <div class="list-item-content">
+                                    <div class="list-item-title">${c.name}</div>
+                                    <div class="list-item-subtitle">${c.description || 'Sin descripción'}</div>
+                                </div>
+                                <div class="list-item-actions">
+                                    <button class="btn btn-primary btn-sm" onclick="app.navigate('community-${c.id}')">Ver</button>
+                                    <button class="btn btn-danger btn-sm" onclick="app.leaveCommunity('${c.id}')">Salir</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                content.innerHTML = html || '<p style="color: #999;">No hay comunidades aún</p>';
+            },
+
+            loadCommunityDetail(communityId) {
+                const community = db.findOne('communities', { id: communityId });
+                if (!community) {
+                    this.navigate('communities');
+                    return;
+                }
+
+                const members = db.find('community_members', { community_id: communityId });
+                const posts = db.find('community_posts', { community_id: communityId });
+
+                const content = document.getElementById('communityDetail');
+                content.innerHTML = `
+                    <button class="btn btn-secondary" onclick="app.navigate('communities')" style="margin-bottom: 1rem;">← Volver</button>
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title">${community.name}</h2>
+                                <p style="color: #7f8c8d; margin-top: 0.5rem;">${community.description || 'Sin descripción'}</p>
+                            </div>
+                        </div>
+                        <div style="margin: 1.5rem 0;">
+                            <p><strong>Código:</strong> ${community.code}</p>
+                            <p><strong>Miembros:</strong> ${members.length}</p>
+                            <p><strong>Posts:</strong> ${posts.length}</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="app.openModal('newPostModal')">+ Nuevo Post</button>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem;">Posts</h3>
+                        <div id="postsList"></div>
+                    </div>
+                `;
+
+                this.renderCommunityPosts(communityId);
+            },
+
+            renderCommunityPosts(communityId) {
+                const posts = db.find('community_posts', { community_id: communityId });
+                const postsList = document.getElementById('postsList');
+                
+                postsList.innerHTML = posts.map(post => {
+                    const author = db.findOne('profiles', { id: post.author_id });
+                    const replies = db.find('post_replies', { post_id: post.id });
+                    const likes = db.find('post_likes', { post_id: post.id });
+
+                    return `
+                        <div class="card" style="margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <div>
+                                    <div class="list-item-title">${author.name}</div>
+                                    <div class="list-item-subtitle">${new Date(post.created_at).toLocaleDateString()}</div>
+                                </div>
+                                ${post.author_id === this.currentUser.id ? `
+                                    <button class="btn btn-danger btn-sm" onclick="app.deletePost('${post.id}')">Eliminar</button>
+                                ` : ''}
+                            </div>
+                            <p>${post.content}</p>
+                            <div style="margin-top: 1rem; display: flex; gap: 2rem;">
+                                <button class="btn btn-sm btn-secondary" onclick="app.likePost('${post.id}')">👍 ${likes.length}</button>
+                                <button class="btn btn-sm btn-secondary" onclick="app.toggleReplies('${post.id}')">💬 ${replies.length}</button>
+                            </div>
+                            <div id="replies-${post.id}" style="display: none; margin-top: 1rem; border-left: 3px solid #ecf0f1; padding-left: 1rem;">
+                                <div id="replies-list-${post.id}"></div>
+                                <textarea id="reply-input-${post.id}" placeholder="Escribe una respuesta..." style="width: 100%; margin-top: 0.5rem;"></textarea>
+                                <button class="btn btn-primary btn-sm" onclick="app.replyToPost('${post.id}', '${communityId}')" style="margin-top: 0.5rem;">Responder</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            // Modal management
+            openModal(modalId) {
+                document.getElementById(modalId).classList.add('active');
+                if (modalId === 'createTaskModal' && this.currentUser.role === 'teacher') {
+                    this.populateClassroomSelect();
+                }
+            },
+
+            closeModal(modalId) {
+                document.getElementById(modalId).classList.remove('active');
+                // Reset form if exists
+                const form = document.querySelector(`#${modalId} form`);
+                if (form) form.reset();
+            },
+
+            // Classroom operations
+            createClassroom(event) {
+                event.preventDefault();
+                const name = document.getElementById('classroomName').value;
+                const description = document.getElementById('classroomDescription').value;
+                const level = document.getElementById('classroomLevel').value;
+
+                const classroom = db.insertOne('classrooms', {
+                    name,
+                    description,
+                    level,
+                    code: db.generateCode(),
+                    teacher_id: this.currentUser.id,
+                    is_active: true
+                });
+
+                this.showAlert('¡Clase creada exitosamente!', 'success');
+                this.closeModal('createClassroomModal');
+                this.navigate('classrooms');
+            },
+
+            joinClassroom(event) {
+                event.preventDefault();
+                const code = document.getElementById('classroomCode').value.toUpperCase();
+                const classroom = db.findOne('classrooms', { code });
+
+                if (!classroom) {
+                    this.showAlert('Código de clase inválido', 'error');
+                    return;
+                }
+
+                const existing = db.findOne('classroom_members', {
+                    classroom_id: classroom.id,
+                    student_id: this.currentUser.id
+                });
+
+                if (existing) {
+                    this.showAlert('Ya estás en esta clase', 'error');
+                    return;
+                }
+
+                db.insertOne('classroom_members', {
+                    classroom_id: classroom.id,
+                    student_id: this.currentUser.id
+                });
+
+                this.showAlert('¡Te has unido a la clase!', 'success');
+                this.closeModal('joinClassroomModal');
+                this.navigate('classrooms');
+            },
+
+            leaveClassroom(classroomId) {
+                if (confirm('¿Estás seguro de que quieres salir de esta clase?')) {
+                    db.deleteOne('classroom_members', {
+                        classroom_id: classroomId,
+                        student_id: this.currentUser.id
+                    });
+                    this.showAlert('Has salido de la clase', 'success');
+                    this.navigate('classrooms');
+                }
+            },
+
+            removeStudentFromClassroom(classroomId, studentId) {
+                if (confirm('¿Remover a este estudiante?')) {
+                    db.deleteOne('classroom_members', {
+                        classroom_id: classroomId,
+                        student_id: studentId
+                    });
+                    this.showAlert('Estudiante removido', 'success');
+                    this.loadClassroomDetail(classroomId);
+                }
+            },
+
+            // Community operations
+            createCommunity(event) {
+                event.preventDefault();
+                const name = document.getElementById('communityName').value;
+                const description = document.getElementById('communityDescription').value;
+
+                const community = db.insertOne('communities', {
+                    name,
+                    description,
+                    code: db.generateCode(),
+                    creator_id: this.currentUser.id,
+                    is_active: true
+                });
+
+                db.insertOne('community_members', {
+                    community_id: community.id,
+                    user_id: this.currentUser.id
+                });
+
+                this.showAlert('¡Comunidad creada exitosamente!', 'success');
+                this.closeModal('createCommunityModal');
+                this.navigate('communities');
+            },
+
+            joinCommunity(event) {
+                event.preventDefault();
+                const code = document.getElementById('communityCode').value.toUpperCase();
+                const community = db.findOne('communities', { code });
+
+                if (!community) {
+                    this.showAlert('Código de comunidad inválido', 'error');
+                    return;
+                }
+
+                const existing = db.findOne('community_members', {
+                    community_id: community.id,
+                    user_id: this.currentUser.id
+                });
+
+                if (existing) {
+                    this.showAlert('Ya estás en esta comunidad', 'error');
+                    return;
+                }
+
+                db.insertOne('community_members', {
+                    community_id: community.id,
+                    user_id: this.currentUser.id
+                });
+
+                this.showAlert('¡Te has unido a la comunidad!', 'success');
+                this.closeModal('joinCommunityModal');
+                this.navigate('communities');
+            },
+
+            leaveCommunity(communityId) {
+                if (confirm('¿Estás seguro de que quieres salir de esta comunidad?')) {
+                    db.deleteOne('community_members', {
+                        community_id: communityId,
+                        user_id: this.currentUser.id
+                    });
+                    this.showAlert('Has salido de la comunidad', 'success');
+                    this.navigate('communities');
+                }
+            },
+
+            // Post operations
+            createPost(event) {
+                event.preventDefault();
+                const communityId = this.currentPage.split('-')[1];
+                const content = document.getElementById('newPostContent').value;
+
+                if (!content.trim()) {
+                    this.showAlert('Por favor, escribe algo', 'error');
+                    return;
+                }
+
+                db.insertOne('community_posts', {
+                    community_id: communityId,
+                    author_id: this.currentUser.id,
+                    content,
+                    is_pinned: false
+                });
+
+                this.showAlert('¡Post publicado!', 'success');
+                this.closeModal('newPostModal');
+                this.loadCommunityDetail(communityId);
+            },
+
+            // Lessons operations
+            loadReadingLessons() {
+                const lessons = db.find('lessons', { type: 'reading' });
+                const content = document.getElementById('readingLessonsList');
+                
+                let html = '';
+                
+                if (this.currentUser.role === 'teacher') {
+                    html += `
+                        <div class="teacher-panel">
+                            <h3>Panel de Profesor</h3>
+                            <button class="btn btn-primary" onclick="app.openModal('createReadingLessonModal')">+ Crear Nueva Lección</button>
+                        </div>
+                    `;
+                }
+
+                if (lessons.length === 0) {
+                    html += '<p style="color: #999;">No hay lecciones aún</p>';
+                } else {
+                    html += lessons.map(lesson => `
+                        <div class="list-item" onclick="app.navigate('lesson-${lesson.id}')">
+                            <div class="list-item-content" style="cursor: pointer;">
+                                <div class="list-item-title">${lesson.title}</div>
+                                <div class="list-item-subtitle">${lesson.description || 'Sin descripción'}</div>
+                                <div style="margin-top: 0.5rem;">
+                                    <span class="badge badge-primary">${lesson.level}</span>
+                                    ${this.currentUser.role === 'teacher' ? `<span class="badge badge-teacher">Por ti</span>` : ''}
+                                </div>
+                            </div>
+                            ${this.currentUser.role === 'teacher' ? `
+                                <div class="list-item-actions">
+                                    <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); app.openAssignLessonModal('${lesson.id}')">Asignar</button>
+                                    <button class="btn btn-danger btn-sm" onclick="event.stopPropagation(); app.deleteLesson('${lesson.id}')">Eliminar</button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `).join('');
+                }
+
+                content.innerHTML = html;
+            },
+
+            loadAssignedReadingLessons() {
+                const assignments = db.find('lesson_assignments', { student_id: this.currentUser.id, lesson_type: 'reading' });
+                const content = document.getElementById('readingLessonsList');
+                
+                if (assignments.length === 0) {
+                    content.innerHTML = '<p style="color: #999;">Tu profesor aún no te ha asignado lecciones de Reading</p>';
+                    return;
+                }
+
+                content.innerHTML = assignments.map(assignment => {
+                    const lesson = db.findOne('lessons', { id: assignment.lesson_id });
+                    if (!lesson) return '';
+                    
+                    return `
+                        <div class="list-item" onclick="app.navigate('lesson-${lesson.id}')">
+                            <div class="list-item-content" style="cursor: pointer;">
+                                <div class="list-item-title">${lesson.title}</div>
+                                <div class="list-item-subtitle">${lesson.description || 'Sin descripción'}</div>
+                                <div style="margin-top: 0.5rem;">
+                                    <span class="badge badge-primary">${lesson.level}</span>
+                                    <span class="badge badge-info" style="margin-left: 0.5rem;">Asignada</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            loadListeningLessons() {
+                const lessons = db.find('lessons', { type: 'listening' });
+                const content = document.getElementById('listeningLessonsList');
+                
+                let html = '';
+                
+                if (this.currentUser.role === 'teacher') {
+                    html += `
+                        <div class="teacher-panel">
+                            <h3>Panel de Profesor</h3>
+                            <button class="btn btn-primary" onclick="app.openModal('createListeningLessonModal')">+ Crear Nueva Lección</button>
+                        </div>
+                    `;
+                }
+
+                if (lessons.length === 0) {
+                    html += '<p style="color: #999;">No hay lecciones aún</p>';
+                } else {
+                    html += lessons.map(lesson => `
+                        <div class="list-item" onclick="app.navigate('lesson-${lesson.id}')">
+                            <div class="list-item-content" style="cursor: pointer;">
+                                <div class="list-item-title">${lesson.title}</div>
+                                <div class="list-item-subtitle">${lesson.description || 'Sin descripción'}</div>
+                                <div style="margin-top: 0.5rem;">
+                                    <span class="badge badge-primary">${lesson.level}</span>
+                                    ${this.currentUser.role === 'teacher' ? `<span class="badge badge-teacher">Por ti</span>` : ''}
+                                </div>
+                            </div>
+                            ${this.currentUser.role === 'teacher' ? `
+                                <div class="list-item-actions">
+                                    <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); app.openAssignLessonModal('${lesson.id}')">Asignar</button>
+                                    <button class="btn btn-danger btn-sm" onclick="event.stopPropagation(); app.deleteLesson('${lesson.id}')">Eliminar</button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `).join('');
+                }
+
+                content.innerHTML = html;
+            },
+
+            loadAssignedListeningLessons() {
+                const assignments = db.find('lesson_assignments', { student_id: this.currentUser.id, lesson_type: 'listening' });
+                const content = document.getElementById('listeningLessonsList');
+                
+                if (assignments.length === 0) {
+                    content.innerHTML = '<p style="color: #999;">Tu profesor aún no te ha asignado lecciones de Listening</p>';
+                    return;
+                }
+
+                content.innerHTML = assignments.map(assignment => {
+                    const lesson = db.findOne('lessons', { id: assignment.lesson_id });
+                    if (!lesson) return '';
+                    
+                    return `
+                        <div class="list-item" onclick="app.navigate('lesson-${lesson.id}')">
+                            <div class="list-item-content" style="cursor: pointer;">
+                                <div class="list-item-title">${lesson.title}</div>
+                                <div class="list-item-subtitle">${lesson.description || 'Sin descripción'}</div>
+                                <div style="margin-top: 0.5rem;">
+                                    <span class="badge badge-primary">${lesson.level}</span>
+                                    <span class="badge badge-info" style="margin-left: 0.5rem;">Asignada</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            loadSpeakingLessons() {
+                const lessons = db.find('lessons', { type: 'speaking' });
+                const content = document.getElementById('speakingLessonsList');
+                
+                let html = '';
+                
+                if (this.currentUser.role === 'teacher') {
+                    html += `
+                        <div class="teacher-panel">
+                            <h3>Panel de Profesor</h3>
+                            <button class="btn btn-primary" onclick="app.openModal('createSpeakingLessonModal')">+ Crear Nueva Lección</button>
+                        </div>
+                    `;
+                }
+
+                if (lessons.length === 0) {
+                    html += '<p style="color: #999;">No hay lecciones aún</p>';
+                } else {
+                    html += lessons.map(lesson => `
+                        <div class="list-item" onclick="app.navigate('lesson-${lesson.id}')">
+                            <div class="list-item-content" style="cursor: pointer;">
+                                <div class="list-item-title">${lesson.title}</div>
+                                <div class="list-item-subtitle">${lesson.description || 'Sin descripción'}</div>
+                                <div style="margin-top: 0.5rem;">
+                                    <span class="badge badge-primary">${lesson.level}</span>
+                                    ${this.currentUser.role === 'teacher' ? `<span class="badge badge-teacher">Por ti</span>` : ''}
+                                </div>
+                            </div>
+                            ${this.currentUser.role === 'teacher' ? `
+                                <div class="list-item-actions">
+                                    <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); app.openAssignLessonModal('${lesson.id}')">Asignar</button>
+                                    <button class="btn btn-danger btn-sm" onclick="event.stopPropagation(); app.deleteLesson('${lesson.id}')">Eliminar</button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `).join('');
+                }
+
+                content.innerHTML = html;
+            },
+
+            loadAssignedSpeakingLessons() {
+                const assignments = db.find('lesson_assignments', { student_id: this.currentUser.id, lesson_type: 'speaking' });
+                const content = document.getElementById('speakingLessonsList');
+                
+                if (assignments.length === 0) {
+                    content.innerHTML = '<p style="color: #999;">Tu profesor aún no te ha asignado lecciones de Speaking</p>';
+                    return;
+                }
+
+                content.innerHTML = assignments.map(assignment => {
+                    const lesson = db.findOne('lessons', { id: assignment.lesson_id });
+                    if (!lesson) return '';
+                    
+                    return `
+                        <div class="list-item" onclick="app.navigate('lesson-${lesson.id}')">
+                            <div class="list-item-content" style="cursor: pointer;">
+                                <div class="list-item-title">${lesson.title}</div>
+                                <div class="list-item-subtitle">${lesson.description || 'Sin descripción'}</div>
+                                <div style="margin-top: 0.5rem;">
+                                    <span class="badge badge-primary">${lesson.level}</span>
+                                    <span class="badge badge-info" style="margin-left: 0.5rem;">Asignada</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            createLesson(event, type) {
+                event.preventDefault();
+                const title = document.getElementById('lessonTitle').value;
+                const description = document.getElementById('lessonDescription').value;
+                const level = document.getElementById('lessonLevel').value;
+
+                const lessonData = {
+                    type,
+                    title,
+                    description,
+                    level,
+                    creator_id: this.currentUser.id
+                };
+
+                if (type === 'reading') {
+                    lessonData.content = document.getElementById('lessonContent').value;
+                } else if (type === 'listening') {
+                    lessonData.audio_url = document.getElementById('lessonAudioUrl').value;
+                    lessonData.transcription = document.getElementById('lessonTranscription').value;
+                } else if (type === 'speaking') {
+                    lessonData.topic = document.getElementById('lessonTopic').value;
+                    lessonData.vocabulary = document.getElementById('lessonVocabulary').value;
+                }
+
+                db.insertOne('lessons', lessonData);
+                this.showAlert('¡Lección creada exitosamente!', 'success');
+                this.closeModal(`createLesson${type.charAt(0).toUpperCase() + type.slice(1)}Modal`);
+                
+                if (type === 'reading') {
+                    this.loadReadingLessons();
+                } else if (type === 'listening') {
+                    this.loadListeningLessons();
+                } else if (type === 'speaking') {
+                    this.loadSpeakingLessons();
+                }
+            },
+
+            loadLessonDetail(lessonId) {
+                const lesson = db.findOne('lessons', { id: lessonId });
+                if (!lesson) {
+                    this.showAlert('Lección no encontrada', 'error');
+                    this.navigate('lessons');
+                    return;
+                }
+
+                const creator = db.findOne('profiles', { id: lesson.creator_id });
+                const content = document.getElementById('lessonDetail');
+                
+                let lessonContent = `
+                    <button class="btn btn-secondary" onclick="app.navigate('lesson-${lesson.type}')" style="margin-bottom: 1rem;">← Volver</button>
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title">${lesson.title}</h2>
+                                <p style="color: #7f8c8d; margin-top: 0.5rem;">${lesson.description}</p>
+                            </div>
+                            <span class="badge badge-primary">${lesson.level}</span>
+                        </div>
+                        <div style="margin: 1rem 0; padding: 1rem; background: #f8f9fa; border-radius: 4px;">
+                            <p><strong>Creada por:</strong> ${creator.name}</p>
+                            <p><strong>Fecha:</strong> ${new Date(lesson.created_at).toLocaleDateString()}</p>
+                            <p><strong>Tipo:</strong> ${lesson.type.toUpperCase()}</p>
+                        </div>
+                    </div>
+                `;
+
+                if (lesson.type === 'reading') {
+                    lessonContent += `
+                        <div class="card">
+                            <h3 style="margin-bottom: 1rem;">Texto para Leer</h3>
+                            <div style="line-height: 1.8; font-size: 1.05rem; color: #2c3e50;">
+                                ${lesson.content.replace(/\n/g, '<br>')}
+                            </div>
+                        </div>
+                    `;
+                } else if (lesson.type === 'listening') {
+                    lessonContent += `
+                        <div class="card">
+                            <h3 style="margin-bottom: 1rem;">Audio</h3>
+                            ${lesson.audio_url ? `
+                                <audio controls style="width: 100%; margin-bottom: 1rem;">
+                                    <source src="${lesson.audio_url}" type="audio/mpeg">
+                                    Tu navegador no soporta el elemento de audio.
+                                </audio>
+                            ` : '<p style="color: #999;">No hay audio disponible</p>'}
+                            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Transcripción</h4>
+                            <div style="background: #f8f9fa; padding: 1rem; border-radius: 4px; line-height: 1.8;">
+                                ${lesson.transcription.replace(/\n/g, '<br>')}
+                            </div>
+                        </div>
+                    `;
+                } else if (lesson.type === 'speaking') {
+                    lessonContent += `
+                        <div class="card">
+                            <h3 style="margin-bottom: 1rem;">Tema de Práctica</h3>
+                            <div style="background: #d6eaf8; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                                <p style="font-size: 1.05rem; color: #2c3e50;">
+                                    ${lesson.topic.replace(/\n/g, '<br>')}
+                                </p>
+                            </div>
+                            ${lesson.vocabulary ? `
+                                <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Vocabulario Sugerido</h4>
+                                <div style="background: #f8f9fa; padding: 1rem; border-radius: 4px;">
+                                    ${lesson.vocabulary.replace(/\n/g, '<br>')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+
+                content.innerHTML = lessonContent;
+            },
+
+            deleteLesson(lessonId) {
+                if (confirm('¿Estás seguro de que quieres eliminar esta lección?')) {
+                    db.deleteOne('lessons', { id: lessonId });
+                    this.showAlert('Lección eliminada', 'success');
+                    this.navigate('lessons');
+                }
+            },
+
+            openAssignLessonModal(lessonId) {
+                localStorage.setItem('lesson_to_assign', lessonId);
+                const students = this.getStudents();
+                const select = document.getElementById('assignStudentId');
+                select.innerHTML = '<option value="">Seleccionar estudiante...</option>' + 
+                    students.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+                this.openModal('assignLessonModal');
+            },
+
+            getStudents() {
+                return db.find('profiles', { role: 'student' });
+            },
+
+            toggleAssignmentType(value) {
+                const groupField = document.getElementById('groupNameField');
+                const studentField = document.getElementById('studentSelectionField');
+                const studentCheckboxes = document.getElementById('studentCheckboxes');
+
+                if (value === 'group') {
+                    groupField.style.display = 'block';
+                    studentField.style.display = 'block';
+                    studentField.id = 'groupStudents';
+                } else if (value === 'individual') {
+                    groupField.style.display = 'none';
+                    studentField.style.display = 'block';
+                    studentField.id = 'individualStudents';
+                } else {
+                    groupField.style.display = 'none';
+                    studentField.style.display = 'none';
+                    return;
+                }
+
+                const students = this.getStudents();
+                studentCheckboxes.innerHTML = students.map(s => `
+                    <div style="margin-bottom: 0.5rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" value="${s.id}" style="cursor: pointer;">
+                            <span>${s.name}</span>
+                        </label>
+                    </div>
+                `).join('');
+            },
+
+            populateClassroomSelect() {
+                const classrooms = db.find('classrooms', { teacher_id: this.currentUser.id });
+                const select = document.getElementById('taskClassroom');
+                select.innerHTML = '<option value="">Seleccionar clase...</option>' +
+                    classrooms.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+            },
+
+            assignLessonToStudent() {
+                const lessonId = localStorage.getItem('lesson_to_assign');
+                const studentId = document.getElementById('assignStudentId').value;
+                
+                if (!studentId) {
+                    this.showAlert('Por favor selecciona un estudiante', 'error');
+                    return;
+                }
+
+                const lesson = db.findOne('lessons', { id: lessonId });
+                
+                db.insertOne('lesson_assignments', {
+                    lesson_id: lessonId,
+                    student_id: studentId,
+                    lesson_type: lesson.type,
+                    assigned_by: this.currentUser.id
+                });
+
+                this.showAlert('¡Lección asignada!', 'success');
+                this.closeModal('assignLessonModal');
+                localStorage.removeItem('lesson_to_assign');
+            },
+
+            createTask(event) {
+                event.preventDefault();
+                const title = document.getElementById('taskTitle').value;
+                const description = document.getElementById('taskDescription').value;
+                const assignmentType = document.getElementById('assignmentType').value;
+                const dueDate = document.getElementById('taskDueDate').value;
+                const classroomId = document.getElementById('taskClassroom').value;
+
+                const task = {
+                    title,
+                    description,
+                    type: assignmentType,
+                    due_date: dueDate,
+                    creator_id: this.currentUser.id,
+                    classroom_id: classroomId
+                };
+
+                if (assignmentType === 'individual') {
+                    const studentIds = Array.from(document.querySelectorAll('#individualStudents input:checked')).map(cb => cb.value);
+                    task.student_ids = studentIds;
+                } else if (assignmentType === 'group') {
+                    task.group_name = document.getElementById('groupName').value;
+                    const studentIds = Array.from(document.querySelectorAll('#groupStudents input:checked')).map(cb => cb.value);
+                    task.student_ids = studentIds;
+                }
+
+                db.insertOne('tasks', task);
+                this.showAlert('¡Tarea creada!', 'success');
+                this.closeModal('createTaskModal');
+                this.loadTeacherDashboard();
+            },
+
+            loadTeacherDashboard() {
+                const content = document.getElementById('dashboardContent');
+                const classrooms = db.find('classrooms', { teacher_id: this.currentUser.id });
+                const tasks = db.find('tasks', { creator_id: this.currentUser.id });
+
+                content.innerHTML = `
+                    <div class="teacher-panel">
+                        <h2>📊 Panel del Profesor</h2>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                            <div style="background: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 8px;">
+                                <div style="font-size: 2rem; font-weight: bold;">${classrooms.length}</div>
+                                <div>Clases activas</div>
+                            </div>
+                            <div style="background: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 8px;">
+                                <div style="font-size: 2rem; font-weight: bold;">${tasks.length}</div>
+                                <div>Tareas creadas</div>
+                            </div>
+                            <div style="background: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 8px;">
+                                <div style="font-size: 2rem; font-weight: bold;">${db.find('lessons', { creator_id: this.currentUser.id }).length}</div>
+                                <div>Lecciones creadas</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1.5rem;">
+                            <button class="btn btn-primary" onclick="app.openModal('createTaskModal')" style="background: white; color: #667eea; margin-right: 0.5rem;">+ Nueva Tarea</button>
+                            <button class="btn btn-primary" onclick="app.navigate('classrooms')" style="background: white; color: #667eea;">Gestionar Estudiantes</button>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Tareas Recientes</h3>
+                    <div>
+                        ${tasks.length === 0 ? `
+                            <p style="color: #999;">Aún no has creado tareas</p>
+                        ` : tasks.slice(-5).reverse().map(task => `
+                            <div class="task-card">
+                                <div class="task-info">
+                                    <div>
+                                        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">${task.title}</div>
+                                        <div style="opacity: 0.9; font-size: 0.95rem;">${task.description}</div>
+                                        <div style="margin-top: 0.5rem;">
+                                            <span class="assignment-type">${task.type === 'individual' ? '👤 Individual' : '👥 Grupo'}</span>
+                                        </div>
+                                    </div>
+                                    <div class="task-due">${new Date(task.due_date).toLocaleDateString()}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            },
+            toggleReplies(postId) {
+                const element = document.getElementById(`replies-${postId}`);
+                if (element) {
+                    element.style.display = element.style.display === 'none' ? 'block' : 'none';
+                    if (element.style.display === 'block') {
+                        this.renderReplies(postId);
+                    }
+                }
+            },
+
+            renderReplies(postId) {
+                const replies = db.find('post_replies', { post_id: postId });
+                const repliesList = document.getElementById(`replies-list-${postId}`);
+
+                repliesList.innerHTML = replies.map(reply => {
+                    const author = db.findOne('profiles', { id: reply.author_id });
+                    return `
+                        <div style="padding: 0.75rem; background: #f8f9fa; border-radius: 4px; margin-bottom: 0.5rem;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <div style="font-weight: 500; font-size: 0.9rem;">${author.name}</div>
+                                    <div style="font-size: 0.85rem; color: #999;">${new Date(reply.created_at).toLocaleDateString()}</div>
+                                </div>
+                                ${reply.author_id === this.currentUser.id ? `
+                                    <button class="btn btn-danger btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="app.deleteReply('${reply.id}', '${postId}')">×</button>
+                                ` : ''}
+                            </div>
+                            <p style="margin-top: 0.5rem; font-size: 0.9rem;">${reply.content}</p>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            // Utility methods
+            showAlert(message, type = 'info') {
+                const container = document.getElementById('alertContainer');
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type}`;
+                alert.textContent = message;
+                container.appendChild(alert);
+
+                setTimeout(() => {
+                    alert.remove();
+                }, 3000);
+            },
+
+            setupEventListeners() {
+                // Close modals when clicking outside
+                window.addEventListener('click', (event) => {
+                    if (event.target.classList.contains('modal')) {
+                        const id = event.target.id;
+                        this.closeModal(id);
+                    }
+                });
+
+                // Navigation with Enter key
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape') {
+                        document.querySelectorAll('.modal.active').forEach(modal => {
+                            this.closeModal(modal.id);
+                        });
+                    }
+                });
+            }
+        };
+
+        // Initialize app when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+
+        // Placeholder functions for posts and replies
+        app.deletePost = function(postId) {
+            if (confirm('¿Estás seguro?')) {
+                db.deleteOne('community_posts', { id: postId });
+                // Reload current page
+                const pages = ['dashboard', 'classrooms', 'communities'];
+                if (pages.includes(this.currentPage)) {
+                    this.navigate(this.currentPage);
+                }
+            }
+        };
+
+        app.deleteReply = function(replyId, postId) {
+            if (confirm('¿Estás seguro?')) {
+                db.deleteOne('post_replies', { id: replyId });
+                this.renderReplies(postId);
+            }
+        };
+
+        app.likePost = function(postId) {
+            const existing = db.findOne('post_likes', {
+                post_id: postId,
+                user_id: this.currentUser.id
+            });
+
+            if (existing) {
+                db.deleteOne('post_likes', {
+                    post_id: postId,
+                    user_id: this.currentUser.id
+                });
+            } else {
+                db.insertOne('post_likes', {
+                    post_id: postId,
+                    user_id: this.currentUser.id
+                });
+            }
+
+            const community = db.find('community_posts', {}).find(p => p.id === postId);
+            if (community) {
+                this.renderCommunityPosts(community.community_id);
+            }
+        };
+
+        app.replyToPost = function(postId, communityId) {
+            const input = document.getElementById(`reply-input-${postId}`);
+            const content = input.value.trim();
+
+            if (!content) {
+                this.showAlert('Por favor, escribe una respuesta', 'error');
+                return;
+            }
+
+            db.insertOne('post_replies', {
+                post_id: postId,
+                author_id: this.currentUser.id,
+                content
+            });
+
+            input.value = '';
+            this.renderReplies(postId);
+            this.showAlert('Respuesta agregada', 'success');
+        };
+    </script>
+</body>
+</html>
